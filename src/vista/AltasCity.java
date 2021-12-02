@@ -174,8 +174,9 @@ public class AltasCity extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarMouseClicked
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-
+        VentanaInicio vi = new VentanaInicio();
         this.setVisible(false);
+        vi.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**

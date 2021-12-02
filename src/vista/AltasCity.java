@@ -4,6 +4,9 @@
  */
 package vista;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author denis
@@ -15,6 +18,8 @@ public class AltasCity extends javax.swing.JFrame {
      */
     public AltasCity() {
         initComponents();
+        
+        cajaLastU.setText(fechaActual());
     }
 
     /**
@@ -34,7 +39,7 @@ public class AltasCity extends javax.swing.JFrame {
         jTxtIdCity = new javax.swing.JTextField();
         jTxtCity = new javax.swing.JTextField();
         jTxtIdCountry = new javax.swing.JTextField();
-        jTxtFechaA = new javax.swing.JTextField();
+        cajaLastU = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
@@ -54,7 +59,7 @@ public class AltasCity extends javax.swing.JFrame {
 
         jLabel5.setText("Last Update");
 
-        jTxtFechaA.setEditable(false);
+        cajaLastU.setEditable(false);
 
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +118,7 @@ public class AltasCity extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTxtFechaA, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cajaLastU, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -155,7 +160,7 @@ public class AltasCity extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTxtFechaA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cajaLastU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                 .addContainerGap())
@@ -164,6 +169,12 @@ public class AltasCity extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public static String fechaActual(){
+        Date fecha = new Date();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY hh:mm:ss"); 
+        
+        return formatoFecha.format(fecha);
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -216,6 +227,7 @@ public class AltasCity extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JTextField cajaLastU;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -226,7 +238,6 @@ public class AltasCity extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTxtCity;
-    private javax.swing.JTextField jTxtFechaA;
     private javax.swing.JTextField jTxtIdCity;
     private javax.swing.JTextField jTxtIdCountry;
     // End of variables declaration//GEN-END:variables

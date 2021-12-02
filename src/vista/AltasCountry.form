@@ -51,7 +51,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jTxtFechaA" max="32767" attributes="0"/>
+                              <Component id="cajaLastU" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="72" max="32767" attributes="0"/>
@@ -86,7 +86,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTxtFechaA" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cajaLastU" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnRegresar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -127,7 +127,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtCountry">
     </Component>
-    <Component class="javax.swing.JTextField" name="jTxtFechaA">
+    <Component class="javax.swing.JTextField" name="cajaLastU">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>

@@ -4,8 +4,11 @@
  */
 package vista;
 
+import controlador.ActorDAO;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import modelo.Actor;
 
 /**
  *
@@ -40,7 +43,7 @@ public class AltasActor extends javax.swing.JFrame {
         cajaLn = new javax.swing.JTextField();
         cajaLastU = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         btnReturn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -74,10 +77,10 @@ public class AltasActor extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setText("Add Actor");
 
-        jButton2.setText("Add");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
@@ -133,7 +136,7 @@ public class AltasActor extends javax.swing.JFrame {
                                     .addComponent(cajaIdActor, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnReturn, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
@@ -146,7 +149,7 @@ public class AltasActor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cajaIdActor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(btnAdd))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -171,7 +174,7 @@ public class AltasActor extends javax.swing.JFrame {
 
     public static String fechaActual(){
         Date fecha = new Date();
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY hh:mm:ss"); 
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss"); 
         
         return formatoFecha.format(fecha);
     }
@@ -184,9 +187,21 @@ public class AltasActor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cajaLastUActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        ActorDAO aDAO = new ActorDAO();
+        String idActor = cajaIdActor.getText();
+        if(cajaIdActor.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "fill in all the fields before continuing");
+        }else{
+            int id = Integer.parseInt(idActor);
+            Actor a = new Actor(id, cajaFN.getText(), cajaLn.getText(), cajaLastU.getText());
+            if(aDAO.insertarActor(a)){
+                JOptionPane.showMessageDialog(null, "Actor added successfully");
+            }else{
+                JOptionPane.showMessageDialog(null, "Actor not added, please try again");
+            }
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         VentanaInicio vi = new VentanaInicio();
@@ -222,6 +237,11 @@ public class AltasActor extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        //Actor a = new Actor(1, "Han", "Jisung", "2021-01-12 11:27:12");
+        //ActorDAO aDAO = new ActorDAO();
+        
+        //System.out.println(aDAO.insertarActor(a) ? "EXITO": "No funcionó");
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new AltasActor().setVisible(true);
@@ -230,13 +250,13 @@ public class AltasActor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnReturn;
     private javax.swing.JTextField cajaFN;
     private javax.swing.JTextField cajaIdActor;
     private javax.swing.JTextField cajaLastU;
     private javax.swing.JTextField cajaLn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

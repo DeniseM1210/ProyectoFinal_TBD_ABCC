@@ -4,8 +4,11 @@
  */
 package vista;
 
+import controlador.CountryDAO;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import modelo.Country;
 
 /**
  *
@@ -35,10 +38,10 @@ public class AltasCountry extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTxtIdCountry = new javax.swing.JTextField();
-        jTxtCountry = new javax.swing.JTextField();
+        cajaIdCountry = new javax.swing.JTextField();
+        cajaCountry = new javax.swing.JTextField();
         cajaLastU = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -55,15 +58,20 @@ public class AltasCountry extends javax.swing.JFrame {
 
         jLabel5.setText("Last Update");
 
-        jTxtIdCountry.addActionListener(new java.awt.event.ActionListener() {
+        cajaIdCountry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTxtIdCountryActionPerformed(evt);
+                cajaIdCountryActionPerformed(evt);
             }
         });
 
         cajaLastU.setEditable(false);
 
-        jButton1.setText("Add");
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Clean");
 
@@ -105,12 +113,12 @@ public class AltasCountry extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTxtIdCountry))
+                                .addComponent(cajaIdCountry))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTxtCountry))
+                                .addComponent(cajaCountry))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel5)
@@ -118,7 +126,7 @@ public class AltasCountry extends javax.swing.JFrame {
                                 .addComponent(cajaLastU)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
@@ -131,12 +139,12 @@ public class AltasCountry extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTxtIdCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(cajaIdCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdd))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTxtCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cajaCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -157,15 +165,31 @@ public class AltasCountry extends javax.swing.JFrame {
         
         return formatoFecha.format(fecha);
     }
-    private void jTxtIdCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtIdCountryActionPerformed
+    private void cajaIdCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cajaIdCountryActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtIdCountryActionPerformed
+    }//GEN-LAST:event_cajaIdCountryActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         VentanaInicio vi = new VentanaInicio();
         this.setVisible(false);
         vi.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        CountryDAO cDAO = new CountryDAO();
+        String idCountry = cajaIdCountry.getText();
+        if(cajaIdCountry.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Fill in all the fields befor continuing");
+        }else{
+            int id = Integer.parseInt(idCountry);
+            Country c = new Country(id, cajaCountry.getText(), cajaLastU.getText());
+            if(cDAO.insertarCountry(c)){
+                JOptionPane.showMessageDialog(null, "Country added successfully");
+            }else{
+                JOptionPane.showMessageDialog(null, "Country not added, please try again");
+            }
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,9 +227,11 @@ public class AltasCountry extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JTextField cajaCountry;
+    private javax.swing.JTextField cajaIdCountry;
     private javax.swing.JTextField cajaLastU;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -213,7 +239,5 @@ public class AltasCountry extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTxtCountry;
-    private javax.swing.JTextField jTxtIdCountry;
     // End of variables declaration//GEN-END:variables
 }

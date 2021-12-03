@@ -26,5 +26,10 @@ public class ActorDAO {
         return resultado;
     }
     
-    
+    public boolean eliminarActor(int idActor){
+        boolean resultado = false;
+        String sql = "DELETE FROM actor WHERE actor_id = \"" + idActor + "\"";
+        resultado = conexion.ejecutarInstruccion(sql);
+        return resultado;
+    }
 }

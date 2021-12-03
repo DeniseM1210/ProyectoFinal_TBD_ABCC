@@ -161,7 +161,7 @@ public class AltasCountry extends javax.swing.JFrame {
 
     public static String fechaActual(){
         Date fecha = new Date();
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY hh:mm:ss"); 
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss"); 
         
         return formatoFecha.format(fecha);
     }

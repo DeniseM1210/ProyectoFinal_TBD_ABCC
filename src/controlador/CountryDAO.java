@@ -25,4 +25,11 @@ public class CountryDAO {
         resultado = conexion.ejecutarInstruccion(sql);
         return resultado;
     }
+    
+    public boolean eliminarCountry(int idCountry){
+        boolean resultado = false;
+        String sql = "DELETE FROM country WHERE country_id = \"" + idCountry + "\"";
+        resultado = conexion.ejecutarInstruccion(sql);
+        return resultado;
+    }
 }

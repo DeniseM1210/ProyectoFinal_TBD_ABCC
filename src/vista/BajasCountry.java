@@ -26,7 +26,7 @@ public class BajasCountry extends javax.swing.JFrame {
     public BajasCountry() {
         initComponents();
         
-        cajaLastU.setText(fechaActual());
+        //cajaLastU.setText(fechaActual());
         actualizarTabla();
     }
 
@@ -46,7 +46,7 @@ public class BajasCountry extends javax.swing.JFrame {
         cajaIdCountry = new javax.swing.JTextField();
         cajaCountry = new javax.swing.JTextField();
         cajaLastU = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnClean = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
@@ -66,7 +66,12 @@ public class BajasCountry extends javax.swing.JFrame {
 
         cajaLastU.setEditable(false);
 
-        jButton1.setText("Search");
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +105,11 @@ public class BajasCountry extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaCountry.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaCountryMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaCountry);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,7 +149,7 @@ public class BajasCountry extends javax.swing.JFrame {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(62, 62, 62)
-                                            .addComponent(jButton1))
+                                            .addComponent(btnSearch))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(btnDelete)))
@@ -157,7 +167,7 @@ public class BajasCountry extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cajaIdCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -208,6 +218,14 @@ public class BajasCountry extends javax.swing.JFrame {
         reestablecer(cajaIdCountry, cajaCountry);
     }//GEN-LAST:event_btnCleanActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        actualizarTabla2();
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void tablaCountryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCountryMouseClicked
+        obtenerRegistroTabla();
+    }//GEN-LAST:event_tablaCountryMouseClicked
+
     public void reestablecer(Component...componentes){
         for(Component Component : componentes){
             if(Component instanceof JTextField){
@@ -231,6 +249,29 @@ public class BajasCountry extends javax.swing.JFrame {
             Logger.getLogger(AltasActor.class.getName()).log(Level.SEVERE, null, ex);
         }
         tablaCountry.setModel(modeloDatos);
+    }
+    
+     public void actualizarTabla2(){
+        String controlador = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/sakila";
+        String consulta = "SELECT * FROM country WHERE country_id = " + cajaIdCountry.getText();
+    
+        ResultSetTableModel modeloDatos = null;
+        
+        try {
+            modeloDatos = new ResultSetTableModel(controlador, url, consulta);
+        } catch (SQLException ex) {
+            Logger.getLogger(BajasActor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BajasActor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tablaCountry.setModel(modeloDatos);
+    }
+     
+    public void obtenerRegistroTabla(){
+        int i = (int) tablaCountry.getValueAt(tablaCountry.getSelectedRow(), 0);
+        cajaIdCountry.setText(i + "");
+        cajaCountry.setText((String) tablaCountry.getValueAt(tablaCountry.getSelectedRow(), 1));
     }
     /**
      * @param args the command line arguments
@@ -271,10 +312,10 @@ public class BajasCountry extends javax.swing.JFrame {
     private javax.swing.JButton btnClean;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JTextField cajaCountry;
     private javax.swing.JTextField cajaIdCountry;
     private javax.swing.JTextField cajaLastU;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

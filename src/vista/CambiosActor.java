@@ -49,7 +49,7 @@ public class CambiosActor extends javax.swing.JFrame {
         cajaFN = new javax.swing.JTextField();
         cajaLN = new javax.swing.JTextField();
         cajaLastU = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnClean = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
@@ -71,7 +71,12 @@ public class CambiosActor extends javax.swing.JFrame {
 
         cajaLastU.setEditable(false);
 
-        jButton1.setText("Search");
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +110,11 @@ public class CambiosActor extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaActor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaActorMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaActor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,7 +149,7 @@ public class CambiosActor extends javax.swing.JFrame {
                         .addGap(59, 59, 59)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(btnUpdate, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(btnClean, javax.swing.GroupLayout.Alignment.TRAILING))
                             .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING))))
@@ -154,7 +164,7 @@ public class CambiosActor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cajaIdActor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -216,6 +226,14 @@ public class CambiosActor extends javax.swing.JFrame {
         reestablecer(cajaIdActor, cajaFN, cajaLN);
     }//GEN-LAST:event_btnCleanActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        actualizarTabla2();
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void tablaActorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaActorMouseClicked
+        obtenerRegistroTabla();
+    }//GEN-LAST:event_tablaActorMouseClicked
+
     public void reestablecer(Component...componentes){
         for(Component Component : componentes){
             if(Component instanceof JTextField){
@@ -239,6 +257,31 @@ public class CambiosActor extends javax.swing.JFrame {
             Logger.getLogger(AltasActor.class.getName()).log(Level.SEVERE, null, ex);
         }
         tablaActor.setModel(modeloDatos);
+    }
+    
+     public void actualizarTabla2(){
+        String controlador = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/sakila";
+        String consulta = "SELECT * FROM actor WHERE actor_id = " + cajaIdActor.getText();
+    
+        ResultSetTableModel modeloDatos = null;
+        
+        try {
+            modeloDatos = new ResultSetTableModel(controlador, url, consulta);
+        } catch (SQLException ex) {
+            Logger.getLogger(BajasActor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BajasActor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tablaActor.setModel(modeloDatos);
+    }
+     
+    public void obtenerRegistroTabla(){
+        int i = (int) tablaActor.getValueAt(tablaActor.getSelectedRow(), 0);
+        cajaIdActor.setText(i + "");
+        cajaFN.setText((String) tablaActor.getValueAt(tablaActor.getSelectedRow(), 1));
+        cajaLN.setText((String) tablaActor.getValueAt(tablaActor.getSelectedRow(), 2));
+        //cajaLastU.setText((String) tablaActor.getValueAt(tablaActor.getSelectedRow(), 3));
     }
     /**
      * @param args the command line arguments
@@ -278,12 +321,12 @@ public class CambiosActor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClean;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JTextField cajaFN;
     private javax.swing.JTextField cajaIdActor;
     private javax.swing.JTextField cajaLN;
     private javax.swing.JTextField cajaLastU;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

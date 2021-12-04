@@ -26,7 +26,7 @@ public class BajasActor extends javax.swing.JFrame {
     public BajasActor() {
         initComponents();
         
-        cajaLastU.setText(fechaActual());
+        //cajaLastU.setText(fechaActual());
         actualizarTabla();
     }
 
@@ -104,6 +104,11 @@ public class BajasActor extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaActor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaActorMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaActor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -212,6 +217,10 @@ public class BajasActor extends javax.swing.JFrame {
         reestablecer(cajaIdActor, cajaFN, cajaLN);
     }//GEN-LAST:event_btnCleanActionPerformed
 
+    private void tablaActorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaActorMouseClicked
+        obtenerRegistroTabla();
+    }//GEN-LAST:event_tablaActorMouseClicked
+
     public void reestablecer(Component...componentes){
         for(Component Component : componentes){
             if(Component instanceof JTextField){
@@ -235,6 +244,31 @@ public class BajasActor extends javax.swing.JFrame {
             Logger.getLogger(AltasActor.class.getName()).log(Level.SEVERE, null, ex);
         }
         tablaActor.setModel(modeloDatos);
+    }
+    
+    public void actualizarTabla2(){
+        String controlador = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/sakila";
+        String consulta = "SELECT * FROM actor WHERE actor_id = " + cajaIdActor.getText();
+    
+        ResultSetTableModel modeloDatos = null;
+        
+        try {
+            modeloDatos = new ResultSetTableModel(controlador, url, consulta);
+        } catch (SQLException ex) {
+            Logger.getLogger(BajasActor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BajasActor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tablaActor.setModel(modeloDatos);
+    }
+    
+    public void obtenerRegistroTabla(){
+        int i = (int) tablaActor.getValueAt(tablaActor.getSelectedRow(), 0);
+        cajaIdActor.setText(i + "");
+        cajaFN.setText((String) tablaActor.getValueAt(tablaActor.getSelectedRow(), 1));
+        cajaLN.setText((String) tablaActor.getValueAt(tablaActor.getSelectedRow(), 2));
+        //cajaLastU.setText((String) tablaActor.getValueAt(tablaActor.getSelectedRow(), 3));
     }
     /**
      * @param args the command line arguments

@@ -47,7 +47,7 @@ public class CambiosCountry extends javax.swing.JFrame {
         cajaIdCountry = new javax.swing.JTextField();
         cajaCountry = new javax.swing.JTextField();
         cajaLastU = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnClean = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
@@ -67,10 +67,10 @@ public class CambiosCountry extends javax.swing.JFrame {
 
         cajaLastU.setEditable(false);
 
-        jButton1.setText("Search");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSearchActionPerformed(evt);
             }
         });
 
@@ -106,6 +106,11 @@ public class CambiosCountry extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaCountry.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaCountryMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaCountry);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,7 +144,7 @@ public class CambiosCountry extends javax.swing.JFrame {
                                 .addComponent(cajaLastU)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnUpdate, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnClean, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(layout.createSequentialGroup()
@@ -156,7 +161,7 @@ public class CambiosCountry extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cajaIdCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -183,9 +188,9 @@ public class CambiosCountry extends javax.swing.JFrame {
         
         return formatoFecha.format(fecha);
     }
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        actualizarTabla2();
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         VentanaInicio vi = new VentanaInicio();
@@ -217,6 +222,10 @@ public class CambiosCountry extends javax.swing.JFrame {
         reestablecer(cajaIdCountry, cajaCountry);
     }//GEN-LAST:event_btnCleanActionPerformed
 
+    private void tablaCountryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCountryMouseClicked
+        obtenerRegistroTabla();
+    }//GEN-LAST:event_tablaCountryMouseClicked
+
     public void reestablecer(Component...componentes){
         for(Component Component : componentes){
             if(Component instanceof JTextField){
@@ -240,6 +249,29 @@ public class CambiosCountry extends javax.swing.JFrame {
             Logger.getLogger(AltasActor.class.getName()).log(Level.SEVERE, null, ex);
         }
         tablaCountry.setModel(modeloDatos);
+    }
+    
+    public void actualizarTabla2(){
+        String controlador = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/sakila";
+        String consulta = "SELECT * FROM country WHERE country_id = " + cajaIdCountry.getText();
+    
+        ResultSetTableModel modeloDatos = null;
+        
+        try {
+            modeloDatos = new ResultSetTableModel(controlador, url, consulta);
+        } catch (SQLException ex) {
+            Logger.getLogger(BajasActor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BajasActor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tablaCountry.setModel(modeloDatos);
+    }
+     
+    public void obtenerRegistroTabla(){
+        int i = (int) tablaCountry.getValueAt(tablaCountry.getSelectedRow(), 0);
+        cajaIdCountry.setText(i + "");
+        cajaCountry.setText((String) tablaCountry.getValueAt(tablaCountry.getSelectedRow(), 1));
     }
     /**
      * @param args the command line arguments
@@ -279,11 +311,11 @@ public class CambiosCountry extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClean;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JTextField cajaCountry;
     private javax.swing.JTextField cajaIdCountry;
     private javax.swing.JTextField cajaLastU;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

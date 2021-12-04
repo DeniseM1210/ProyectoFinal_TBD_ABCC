@@ -5,9 +5,11 @@
 package vista;
 
 import controlador.ActorDAO;
+import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import modelo.Actor;
 
 /**
@@ -44,7 +46,7 @@ public class AltasActor extends javax.swing.JFrame {
         cajaLastU = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         btnAdd = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnClean = new javax.swing.JButton();
         btnReturn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -84,7 +86,12 @@ public class AltasActor extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Clean");
+        btnClean.setText("Clean");
+        btnClean.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCleanActionPerformed(evt);
+            }
+        });
 
         btnReturn.setText("Return");
         btnReturn.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +144,7 @@ public class AltasActor extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnClean, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnReturn, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
@@ -154,7 +161,7 @@ public class AltasActor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cajaFN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnClean))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -209,6 +216,17 @@ public class AltasActor extends javax.swing.JFrame {
         vi.setVisible(true);
     }//GEN-LAST:event_btnReturnActionPerformed
 
+    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
+        reestablecer(cajaIdActor, cajaFN, cajaLn);
+    }//GEN-LAST:event_btnCleanActionPerformed
+
+    public void reestablecer(Component...componentes){
+        for(Component Component : componentes){
+            if(Component instanceof JTextField){
+                ((JTextField)Component).setText("");
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -251,12 +269,12 @@ public class AltasActor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnClean;
     private javax.swing.JButton btnReturn;
     private javax.swing.JTextField cajaFN;
     private javax.swing.JTextField cajaIdActor;
     private javax.swing.JTextField cajaLastU;
     private javax.swing.JTextField cajaLn;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

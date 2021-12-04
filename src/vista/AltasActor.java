@@ -208,8 +208,10 @@ public class AltasActor extends javax.swing.JFrame {
             Actor a = new Actor(id, cajaFN.getText(), cajaLn.getText(), cajaLastU.getText());
             if(aDAO.insertarActor(a)){
                 JOptionPane.showMessageDialog(null, "Actor added successfully");
+                actualizarTabla();
             }else{
                 JOptionPane.showMessageDialog(null, "Actor not added, please try again");
+                actualizarTabla();
             }
         }
     }//GEN-LAST:event_btnAddActionPerformed

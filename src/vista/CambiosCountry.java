@@ -202,9 +202,14 @@ public class CambiosCountry extends javax.swing.JFrame {
         
         if(cDAO.modificarCountry(c)){
             JOptionPane.showMessageDialog(null, "Country modified successfully");
+            actualizarTabla();
+            reestablecer(cajaIdCountry, cajaCountry);
             cajaCountry.setEnabled(false);
         }else{
             JOptionPane.showMessageDialog(null, "The country was'nt modified");
+            actualizarTabla();
+            reestablecer(cajaIdCountry, cajaCountry);
+            cajaCountry.setEnabled(false);
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 

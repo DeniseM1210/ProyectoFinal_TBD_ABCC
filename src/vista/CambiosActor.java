@@ -199,10 +199,16 @@ public class CambiosActor extends javax.swing.JFrame {
         
         if(aDAO.modificarActor(a)){
             JOptionPane.showMessageDialog(null, "Actor modified successfully");
+            actualizarTabla();
+            reestablecer(cajaIdActor, cajaFN, cajaLN);
             cajaFN.setEnabled(false);
             cajaLN.setEnabled(false);
         }else{
             JOptionPane.showMessageDialog(null, "The actor was'nt modified");
+            actualizarTabla();
+            reestablecer(cajaIdActor, cajaFN, cajaLN);
+            cajaFN.setEnabled(false);
+            cajaLN.setEnabled(false);
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 

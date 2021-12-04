@@ -193,9 +193,12 @@ public class BajasActor extends javax.swing.JFrame {
         
         if(aDAO.eliminarActor(Integer.parseInt(cajaIdActor.getText()))){
             JOptionPane.showMessageDialog(null, "Actor deleted successfully");
-            
+            actualizarTabla();
+            reestablecer(cajaIdActor, cajaFN, cajaLN);
         }else{
             JOptionPane.showMessageDialog(null, "The actor was not eliminated");
+            actualizarTabla();
+            reestablecer(cajaIdActor, cajaFN, cajaLN);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 

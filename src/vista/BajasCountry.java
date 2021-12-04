@@ -195,8 +195,12 @@ public class BajasCountry extends javax.swing.JFrame {
         
         if(cDAO.eliminarCountry(Integer.parseInt(cajaIdCountry.getText()))){
             JOptionPane.showMessageDialog(null, "Country deleted successfully");
+            actualizarTabla();
+            reestablecer(cajaIdCountry, cajaCountry);
         }else{
             JOptionPane.showMessageDialog(null, "The Country was not eliminated");
+            actualizarTabla();
+            reestablecer(cajaIdCountry, cajaCountry);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -215,7 +219,7 @@ public class BajasCountry extends javax.swing.JFrame {
     public void actualizarTabla(){
         String controlador = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/sakila";
-        String consulta = "SELECT * FROM actor";
+        String consulta = "SELECT * FROM country";
         
         ResultSetTableModel modeloDatos = null;
         

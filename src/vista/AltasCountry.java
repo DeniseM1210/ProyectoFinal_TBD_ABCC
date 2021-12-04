@@ -196,8 +196,10 @@ public class AltasCountry extends javax.swing.JFrame {
             Country c = new Country(id, cajaCountry.getText(), cajaLastU.getText());
             if(cDAO.insertarCountry(c)){
                 JOptionPane.showMessageDialog(null, "Country added successfully");
+                actualizarTabla();
             }else{
                 JOptionPane.showMessageDialog(null, "Country not added, please try again");
+                actualizarTabla();
             }
         }
     }//GEN-LAST:event_btnAddActionPerformed

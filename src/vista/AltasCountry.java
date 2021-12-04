@@ -5,9 +5,11 @@
 package vista;
 
 import controlador.CountryDAO;
+import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import modelo.Country;
 
 /**
@@ -42,7 +44,7 @@ public class AltasCountry extends javax.swing.JFrame {
         cajaCountry = new javax.swing.JTextField();
         cajaLastU = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnClean = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -73,7 +75,12 @@ public class AltasCountry extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Clean");
+        btnClean.setText("Clean");
+        btnClean.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCleanActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setText("Return ");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +134,7 @@ public class AltasCountry extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnClean, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
@@ -145,7 +152,7 @@ public class AltasCountry extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cajaCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(btnClean))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -191,6 +198,17 @@ public class AltasCountry extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
+    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
+        reestablecer(cajaIdCountry, cajaCountry);
+    }//GEN-LAST:event_btnCleanActionPerformed
+
+    public void reestablecer(Component...componentes){
+        for(Component Component : componentes){
+            if(Component instanceof JTextField){
+                ((JTextField)Component).setText("");
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -228,11 +246,11 @@ public class AltasCountry extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnClean;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JTextField cajaCountry;
     private javax.swing.JTextField cajaIdCountry;
     private javax.swing.JTextField cajaLastU;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

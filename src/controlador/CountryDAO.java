@@ -32,4 +32,14 @@ public class CountryDAO {
         resultado = conexion.ejecutarInstruccion(sql);
         return resultado;
     }
+    
+    public boolean modificarCountry(Country c){
+        boolean resultado = false;
+        
+        String sql = "UPDATE country SET country = '" + c.getCountry() + "', last_update = '" + c.getLastUpdate() + "' WHERE country_id = " +
+                c.getIdCountry() + "";
+        resultado = conexion.ejecutarInstruccion(sql);
+        
+        return resultado;
+    }
 }

@@ -6,8 +6,11 @@ package vista;
 
 import controlador.ActorDAO;
 import java.awt.Component;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import modelo.Actor;
@@ -25,6 +28,7 @@ public class AltasActor extends javax.swing.JFrame {
         initComponents();
         
         cajaLastU.setText(fechaActual());
+        actualizarTabla();
     }
 
     /**
@@ -49,7 +53,7 @@ public class AltasActor extends javax.swing.JFrame {
         btnClean = new javax.swing.JButton();
         btnReturn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaActor = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,7 +104,7 @@ public class AltasActor extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaActor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -111,7 +115,7 @@ public class AltasActor extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaActor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,6 +231,23 @@ public class AltasActor extends javax.swing.JFrame {
             }
         }
     }
+    
+    public void actualizarTabla(){
+        String controlador = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/sakila";
+        String consulta = "SELECT * FROM actor";
+        
+        ResultSetTableModel modeloDatos = null;
+        
+        try {
+            modeloDatos = new ResultSetTableModel(controlador, url, consulta);
+        } catch (SQLException ex) {
+            Logger.getLogger(AltasActor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AltasActor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tablaActor.setModel(modeloDatos);
+    }
     /**
      * @param args the command line arguments
      */
@@ -281,6 +302,6 @@ public class AltasActor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaActor;
     // End of variables declaration//GEN-END:variables
 }

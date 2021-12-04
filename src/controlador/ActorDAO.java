@@ -32,4 +32,14 @@ public class ActorDAO {
         resultado = conexion.ejecutarInstruccion(sql);
         return resultado;
     }
+    
+    public boolean modificarActor(Actor a){
+        boolean resultado = false;
+        
+        String sql = "UPDATE actor SET first_name = '" + a.getFirstName() + "', last_name = '" + a.getLastName() +
+                "', last_update = '" + a.getLastUpdate() + "' WHERE actor_id = " + a.getIdActor() + "";
+        resultado = conexion.ejecutarInstruccion(sql);
+        
+        return resultado;
+    }
 }

@@ -20,7 +20,7 @@ public class CityDAO {
     
     public boolean insertarCity(City c){
         boolean resultado = false;
-        String sql = "INSERT INTO actor VALUES(" + c.getIdCity() + ", '" + c.getCity() + "', " + c.getIdCountry() +
+        String sql = "INSERT INTO city VALUES(" + c.getIdCity() + ", '" + c.getCity() + "', " + c.getIdCountry() +
                 " , '" + c.getLastUpdate() + "');";
         resultado = conexion.ejecutarInstruccion(sql);
         return resultado;
@@ -36,7 +36,7 @@ public class CityDAO {
     public boolean modificarCity(City c){
         boolean resultado = false;
         
-        String sql = "UPDATE city SET city = '" + c.getCity() + "', country_id = " + c.getIdCountry() + ", last_update = '" +
+        String sql = "UPDATE city SET city = '" + c.getCity() + "', country_id = " + c.getIdCountry() + ", last_update = '" + c.getLastUpdate() +
                 "' WHERE city_id = " + c.getIdCity() + "";
         resultado = conexion.ejecutarInstruccion(sql);
         return resultado;

@@ -4,8 +4,16 @@
  */
 package vista;
 
+import controlador.CityDAO;
+import java.awt.Component;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import modelo.City;
 
 /**
  *
@@ -20,6 +28,7 @@ public class AltasCity extends javax.swing.JFrame {
         initComponents();
         
         cajaLastU.setText(fechaActual());
+        actualizarTabla();
     }
 
     /**
@@ -69,6 +78,11 @@ public class AltasCity extends javax.swing.JFrame {
         });
 
         btnClean.setText("Clean");
+        btnClean.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCleanActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setText("Return");
         btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -171,12 +185,28 @@ public class AltasCity extends javax.swing.JFrame {
 
     public static String fechaActual(){
         Date fecha = new Date();
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY hh:mm:ss"); 
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss"); 
         
         return formatoFecha.format(fecha);
     }
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        CityDAO cDAO = new CityDAO();
+        String idCity = cajaIdCity.getText();
+        String idCountry = cajaIdCountry.getText();
+        if(cajaIdCity.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "fill in all the fields before continuing");
+        }else{
+            int id = Integer.parseInt(idCity);
+            int idC = Integer.parseInt(idCountry);
+            City c = new City(id, cajaCity.getText(), idC, cajaLastU.getText());
+            if(cDAO.insertarCity(c)){
+                JOptionPane.showMessageDialog(null, "City added successfully");
+                actualizarTabla();
+            }else{
+                JOptionPane.showMessageDialog(null, "City not added, please try again");
+                actualizarTabla();
+            }
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
@@ -190,6 +220,34 @@ public class AltasCity extends javax.swing.JFrame {
         vi.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
+        reestablecer(cajaIdCity, cajaCity, cajaIdCountry);
+    }//GEN-LAST:event_btnCleanActionPerformed
+
+    public void actualizarTabla(){
+        String controlador = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/sakila";
+        String consulta = "SELECT * FROM city";
+        
+        ResultSetTableModel modeloDatos = null;
+        
+        try {
+            modeloDatos = new ResultSetTableModel(controlador, url, consulta);
+        } catch (SQLException ex) {
+            Logger.getLogger(AltasActor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AltasActor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tablaCity.setModel(modeloDatos);
+    }
+    
+    public void reestablecer(Component...componentes){
+        for(Component Component : componentes){
+            if(Component instanceof JTextField){
+                ((JTextField)Component).setText("");
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */

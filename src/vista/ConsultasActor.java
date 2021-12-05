@@ -4,6 +4,7 @@
  */
 package vista;
 
+import controlador.ActorDAO;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,10 +20,11 @@ public class ConsultasActor extends javax.swing.JFrame {
     /**
      * Creates new form ConsultasActor
      */
+    byte opcionSel = 0;
     public ConsultasActor() {
         initComponents();
         
-        cajaLastU.setText(fechaActual());
+        //cajaLastU.setText(fechaActual());
         actualizarTabla();
     }
 
@@ -35,21 +37,24 @@ public class ConsultasActor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        cajaIdActor = new javax.swing.JTextField();
+        cajaFN = new javax.swing.JTextField();
+        cajaLN = new javax.swing.JTextField();
         cajaLastU = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        comboOpciones = new javax.swing.JComboBox<>();
+        btnSearch = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaActor = new javax.swing.JTable();
+
+        jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,14 +71,19 @@ public class ConsultasActor extends javax.swing.JFrame {
 
         cajaLastU.setEditable(false);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        comboOpciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccionar opcion...", "id Actor", "First Name", "Last Name", "Last Update", "All" }));
+        comboOpciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                comboOpcionesActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Search");
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Clean");
 
@@ -116,17 +126,17 @@ public class ConsultasActor extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1))
+                                .addComponent(cajaIdActor))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField2))
+                                .addComponent(cajaFN))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField3))
+                                .addComponent(cajaLN))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel5)
@@ -134,16 +144,14 @@ public class ConsultasActor extends javax.swing.JFrame {
                                 .addComponent(cajaLastU)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(42, 42, 42)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton1)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(67, 67, 67)
+                                    .addComponent(btnSearch))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton2)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(comboOpciones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnRegresar)))))
@@ -157,17 +165,17 @@ public class ConsultasActor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cajaIdActor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(cajaFN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cajaLN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -188,9 +196,9 @@ public class ConsultasActor extends javax.swing.JFrame {
         
         return formatoFecha.format(fecha);
     }
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void comboOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboOpcionesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_comboOpcionesActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         VentanaInicio vi = new VentanaInicio();
@@ -198,12 +206,99 @@ public class ConsultasActor extends javax.swing.JFrame {
         vi.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        
+        ActorDAO aDAO = new ActorDAO();
+        
+        if(comboOpciones.getSelectedIndex() == 1){
+            if(cajaIdActor.getText().isEmpty()){
+                opcionSel = 0;
+            }else{
+                opcionSel = 1;
+            }
+            btnSearch.setEnabled(true);
+            cajaIdActor.setEnabled(true);
+            cajaFN.setEnabled(false);
+            cajaLN.setEnabled(false);
+            cajaLastU.setEnabled(false);
+        }else if(comboOpciones.getSelectedIndex() == 2){
+            if(cajaFN.getText().isEmpty()){
+                opcionSel = 0;
+            }else{
+                opcionSel = 2;
+            }
+            btnSearch.setEnabled(true);
+            cajaIdActor.setEnabled(false);
+            cajaFN.setEnabled(true);
+            cajaLN.setEnabled(false);
+            cajaLastU.setEnabled(false);
+        }else if(comboOpciones.getSelectedIndex() == 3){
+            if(cajaLN.getText().isEmpty()){
+                opcionSel = 0;
+            }else{
+                opcionSel = 3;
+            }
+            btnSearch.setEnabled(true);
+            cajaIdActor.setEnabled(false);
+            cajaFN.setEnabled(false);
+            cajaLN.setEnabled(true);
+            cajaLastU.setEnabled(false);
+        }else if(comboOpciones.getSelectedIndex() == 4){
+            if(cajaLastU.getText().isEmpty()){
+                opcionSel = 0;
+            }else{
+                opcionSel = 4;
+            }
+            btnSearch.setEnabled(true);
+            cajaIdActor.setEnabled(false);
+            cajaFN.setEnabled(false);
+            cajaLN.setEnabled(false);
+            cajaLastU.setEnabled(true);
+        }else if(comboOpciones.getSelectedIndex() == 0){
+            opcionSel = 0;
+            btnSearch.setEnabled(false);
+            cajaIdActor.setEnabled(false);
+            cajaFN.setEnabled(false);
+            cajaLN.setEnabled(false);
+            cajaLastU.setEnabled(false);
+        }else if(comboOpciones.getSelectedIndex() == 5){
+            opcionSel = 5;
+            btnSearch.setEnabled(true);
+            cajaIdActor.setEnabled(true);
+            cajaFN.setEnabled(true);
+            cajaLN.setEnabled(true);
+            cajaLastU.setEnabled(true);
+        }
+        actualizarTabla();
+    }//GEN-LAST:event_btnSearchActionPerformed
+
     public void actualizarTabla(){
         String controlador = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/sakila";
         String consulta = "SELECT * FROM actor";
         
         ResultSetTableModel modeloDatos = null;
+        
+        if(opcionSel == 6){
+            int id = -1;
+            if(cajaIdActor.getText() != ""){
+                id = Integer.parseInt(cajaIdActor.getText());
+            }
+            consulta = "SELECT * FROM actor WHERE actor_id = " + id + " AND first_name = '" + cajaFN.getText() +
+                    "' AND last_name = '" + cajaLN.getText() + "' AND last_update = '" + cajaLastU.getText() + "';";
+        }else if(opcionSel == 1){
+            int id = -1;
+            if(cajaIdActor.getText() != ""){
+                id = Integer.parseInt(cajaIdActor.getText());
+            }
+            consulta = "SELECT * FROM actor WHERE actor_id = " + id + ";";
+        }else if(opcionSel == 2){
+            consulta = "SELECT * FROM actor WHERE first_name = '" + cajaFN.getText() + "';";
+        }else if(opcionSel == 3){
+            consulta = "SELECT * FROM actor WHERE last_name = '" + cajaLN.getText() + "';";
+        }else if(opcionSel == 4){
+            consulta = "SELECT * FROM actor WHERE last_update = '" + cajaLastU.getText() + "';";
+        }
         
         try {
             modeloDatos = new ResultSetTableModel(controlador, url, consulta);
@@ -214,6 +309,8 @@ public class ConsultasActor extends javax.swing.JFrame {
         }
         tablaActor.setModel(modeloDatos);
     }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -251,19 +348,20 @@ public class ConsultasActor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JTextField cajaFN;
+    private javax.swing.JTextField cajaIdActor;
+    private javax.swing.JTextField cajaLN;
     private javax.swing.JTextField cajaLastU;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> comboOpciones;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable tablaActor;
     // End of variables declaration//GEN-END:variables
 }

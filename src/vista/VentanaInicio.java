@@ -18,7 +18,7 @@ public class VentanaInicio extends javax.swing.JFrame {
     public VentanaInicio() {
         initComponents();
         
-        this.getContentPane().setBackground(Color.pink);
+        //this.getContentPane().setBackground(Color.pink);
     }
 
     /**
@@ -50,9 +50,11 @@ public class VentanaInicio extends javax.swing.JFrame {
         jMenuConsultasCity = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sakila Database");
         setMaximumSize(new java.awt.Dimension(565, 360));
         setMinimumSize(new java.awt.Dimension(565, 360));
         setPreferredSize(new java.awt.Dimension(560, 338));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Chiller", 1, 48)); // NOI18N

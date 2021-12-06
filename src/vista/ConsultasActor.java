@@ -5,11 +5,13 @@
 package vista;
 
 import controlador.ActorDAO;
+import java.awt.Component;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextField;
 
 /**
  *
@@ -49,7 +51,7 @@ public class ConsultasActor extends javax.swing.JFrame {
         cajaLastU = new javax.swing.JTextField();
         comboOpciones = new javax.swing.JComboBox<>();
         btnSearch = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnClean = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaActor = new javax.swing.JTable();
@@ -69,8 +71,6 @@ public class ConsultasActor extends javax.swing.JFrame {
 
         jLabel5.setText("Last Update");
 
-        cajaLastU.setEditable(false);
-
         comboOpciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccionar opcion...", "id Actor", "First Name", "Last Name", "Last Update", "All" }));
         comboOpciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,7 +85,12 @@ public class ConsultasActor extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Clean");
+        btnClean.setText("Clean");
+        btnClean.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCleanActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setText("Return");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -150,7 +155,7 @@ public class ConsultasActor extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btnClean, javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(comboOpciones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -176,7 +181,7 @@ public class ConsultasActor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cajaLN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(btnClean))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -272,6 +277,13 @@ public class ConsultasActor extends javax.swing.JFrame {
         actualizarTabla();
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
+        reestablecer(cajaIdActor, cajaFN, cajaLN);
+        opcionSel = 5;
+        actualizarTabla();
+        comboOpciones.setSelectedIndex(5);
+    }//GEN-LAST:event_btnCleanActionPerformed
+
     public void actualizarTabla(){
         String controlador = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/sakila";
@@ -310,7 +322,13 @@ public class ConsultasActor extends javax.swing.JFrame {
         tablaActor.setModel(modeloDatos);
     }
     
-    
+    public void reestablecer(Component...componentes){
+        for(Component Component : componentes){
+            if(Component instanceof JTextField){
+                ((JTextField)Component).setText("");
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -347,6 +365,7 @@ public class ConsultasActor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClean;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSearch;
     private javax.swing.JTextField cajaFN;
@@ -354,7 +373,6 @@ public class ConsultasActor extends javax.swing.JFrame {
     private javax.swing.JTextField cajaLN;
     private javax.swing.JTextField cajaLastU;
     private javax.swing.JComboBox<String> comboOpciones;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

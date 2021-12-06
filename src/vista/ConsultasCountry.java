@@ -4,11 +4,13 @@
  */
 package vista;
 
+import java.awt.Component;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextField;
 
 /**
  *
@@ -19,10 +21,11 @@ public class ConsultasCountry extends javax.swing.JFrame {
     /**
      * Creates new form ConsultasCountry
      */
+    byte op = 0;
     public ConsultasCountry() {
         initComponents();
         
-        cajaLastU.setText(fechaActual());
+        //cajaLastU.setText(fechaActual());
         actualizarTabla();
     }
 
@@ -39,10 +42,10 @@ public class ConsultasCountry extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        cajaIdCountry = new javax.swing.JTextField();
+        cajaCountry = new javax.swing.JTextField();
         cajaLastU = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboOpciones = new javax.swing.JComboBox<>();
         btnSearch = new javax.swing.JButton();
         btnClean = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
@@ -60,13 +63,21 @@ public class ConsultasCountry extends javax.swing.JFrame {
 
         jLabel4.setText("Last Update");
 
-        cajaLastU.setEditable(false);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboOpciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select an option", "id country", "country", "last update", "all" }));
 
         btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         btnClean.setText("Clean");
+        btnClean.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCleanActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setText("Return");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -104,28 +115,26 @@ public class ConsultasCountry extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1))
+                                .addComponent(cajaIdCountry))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField2))
+                                .addComponent(cajaCountry))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cajaLastU)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(33, 33, 33)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnSearch)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addComponent(btnSearch))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnClean))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnClean, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(comboOpciones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnRegresar))
@@ -142,12 +151,12 @@ public class ConsultasCountry extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cajaIdCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cajaCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -176,12 +185,84 @@ public class ConsultasCountry extends javax.swing.JFrame {
         vi.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        if(comboOpciones.getSelectedIndex() == 1){
+            if(cajaIdCountry.getText().isEmpty()){
+                op = 0;
+            }else{
+                op = 1;
+            }
+            btnSearch.setEnabled(true);
+            cajaIdCountry.setEnabled(true);
+            cajaCountry.setEnabled(false);
+            cajaLastU.setEnabled(false);
+        }else if(comboOpciones.getSelectedIndex() == 2){
+            if(cajaCountry.getText().isEmpty()){
+                op = 0;
+            }else{
+                op = 2;
+            }
+            btnSearch.setEnabled(true);
+            cajaIdCountry.setEnabled(false);
+            cajaCountry.setEnabled(true);
+            cajaLastU.setEnabled(false);
+        }else if(comboOpciones.getSelectedIndex() == 3){
+            if(cajaLastU.getText().isEmpty()){
+                op = 0;
+            }else{
+                op = 3;
+            }
+            btnSearch.setEnabled(true);
+            cajaIdCountry.setEnabled(false);
+            cajaCountry.setEnabled(false);
+            cajaLastU.setEnabled(true);
+        }else if(comboOpciones.getSelectedIndex() == 0){
+            op = 0;
+            btnSearch.setEnabled(false);
+            cajaIdCountry.setEnabled(false);
+            cajaCountry.setEnabled(false);
+            cajaLastU.setEnabled(false);
+        }else if(comboOpciones.getSelectedIndex() == 4){
+            op = 4;
+            btnSearch.setEnabled(true);
+            cajaIdCountry.setEnabled(true);
+            cajaCountry.setEnabled(true);
+            cajaLastU.setEnabled(true);
+        }
+        actualizarTabla();
+        
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
+        reestablecer(cajaIdCountry, cajaCountry);
+    }//GEN-LAST:event_btnCleanActionPerformed
+
     public void actualizarTabla(){
         String controlador = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/sakila";
         String consulta = "SELECT * FROM country";
         
         ResultSetTableModel modeloDatos = null;
+        
+        if(op == 4){
+            int id = -1;
+            if(cajaIdCountry.getText() != ""){
+                id = Integer.parseInt(cajaIdCountry.getText());
+            }
+            consulta = "SELECT * FROM country WHERE country_id = " + id + "AND country = '" +
+                    cajaCountry.getText() + "' AND last_update = '" + cajaLastU.getText() + "';";
+        }else if(op == 1){
+            int id = -1;
+            if(cajaIdCountry.getText() != ""){
+                id = Integer.parseInt(cajaIdCountry.getText());
+            }
+            consulta = "SELECT * FROM country WHERE country_id = " + id + ";";
+        }else if(op == 2){
+            consulta = "SELECT * FROM country WHERE country = '" + cajaCountry.getText() + "';";
+        }else if(op == 3){
+            consulta = "SELECT * FROM country WHERE last_update = '" + cajaLastU.getText() + "';";
+        }
+        
         
         try {
             modeloDatos = new ResultSetTableModel(controlador, url, consulta);
@@ -191,6 +272,14 @@ public class ConsultasCountry extends javax.swing.JFrame {
             Logger.getLogger(AltasActor.class.getName()).log(Level.SEVERE, null, ex);
         }
         tablaCountry.setModel(modeloDatos);
+    }
+    
+    public void reestablecer(Component...componentes){
+        for(Component Component : componentes){
+            if(Component instanceof JTextField){
+                ((JTextField)Component).setText("");
+            }
+        }
     }
     /**
      * @param args the command line arguments
@@ -231,15 +320,15 @@ public class ConsultasCountry extends javax.swing.JFrame {
     private javax.swing.JButton btnClean;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JTextField cajaCountry;
+    private javax.swing.JTextField cajaIdCountry;
     private javax.swing.JTextField cajaLastU;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> comboOpciones;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tablaCountry;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,8 +4,14 @@
  */
 package vista;
 
+import controlador.CityDAO;
+import java.awt.Component;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTextField;
 
 /**
  *
@@ -16,10 +22,12 @@ public class ConsultasCity extends javax.swing.JFrame {
     /**
      * Creates new form ConsultasCity
      */
+    byte op = 0;
     public ConsultasCity() {
         initComponents();
         
-        cajaLastU.setText(fechaActual());
+        //cajaLastU.setText(fechaActual());}
+        actualizarTabla();
     }
 
     /**
@@ -36,13 +44,13 @@ public class ConsultasCity extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        cajaIdCity = new javax.swing.JTextField();
+        cajaCity = new javax.swing.JTextField();
+        cajaIdCountry = new javax.swing.JTextField();
         cajaLastU = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        comboOp = new javax.swing.JComboBox<>();
+        btnSearch = new javax.swing.JButton();
+        btnClean = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaCity = new javax.swing.JTable();
@@ -60,13 +68,21 @@ public class ConsultasCity extends javax.swing.JFrame {
 
         jLabel5.setText("Last Update");
 
-        cajaLastU.setEditable(false);
+        comboOp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select an option...", "Id City", "City", "Id Country", "Last Update", "All" }));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("Search");
-
-        jButton2.setText("Clean");
+        btnClean.setText("Clean");
+        btnClean.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCleanActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setText("Return");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -106,35 +122,33 @@ public class ConsultasCity extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1))
+                                .addComponent(cajaIdCity))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField2))
+                                .addComponent(cajaCity))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField3))
+                                .addComponent(cajaIdCountry))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cajaLastU)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(49, 49, 49)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(74, 74, 74)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnClean, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRegresar)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(comboOp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -145,18 +159,18 @@ public class ConsultasCity extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cajaIdCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboOp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(cajaCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(cajaIdCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClean))
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -172,7 +186,7 @@ public class ConsultasCity extends javax.swing.JFrame {
 
     public static String fechaActual(){
         Date fecha = new Date();
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY hh:mm:ss"); 
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss"); 
         
         return formatoFecha.format(fecha);
     }
@@ -182,6 +196,128 @@ public class ConsultasCity extends javax.swing.JFrame {
         vi.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        CityDAO cDAO = new CityDAO();
+        
+        if(comboOp.getSelectedIndex() == 1){
+            if(cajaIdCity.getText().isEmpty()){
+                op = 0;
+            }else{
+                op = 1;
+            }
+            btnSearch.setEnabled(true);
+            cajaIdCity.setEnabled(true);
+            cajaCity.setEnabled(false);
+            cajaIdCountry.setEnabled(false);
+            cajaLastU.setEnabled(false);
+        }else if(comboOp.getSelectedIndex() == 2){
+            if(cajaCity.getText().isEmpty()){
+                op = 0;
+            }else{
+                op = 2;
+            }
+            btnSearch.setEnabled(true);
+            cajaIdCity.setEnabled(false);
+            cajaCity.setEnabled(true);
+            cajaIdCountry.setEnabled(false);
+            cajaLastU.setEnabled(false);
+        }else if(comboOp.getSelectedIndex() == 3){
+            if(cajaIdCountry.getText().isEmpty()){
+                op = 0;
+            }else{
+                op = 3;
+            }
+            btnSearch.setEnabled(true);
+            cajaIdCity.setEnabled(false);
+            cajaCity.setEnabled(false);
+            cajaIdCountry.setEnabled(true);
+            cajaLastU.setEnabled(false);
+        }else if(comboOp.getSelectedIndex() == 4){
+            if(cajaLastU.getText().isEmpty()){
+                op = 0;
+            }else{
+                op = 4;
+            }
+            btnSearch.setEnabled(true);
+            cajaIdCity.setEnabled(false);
+            cajaCity.setEnabled(false);
+            cajaIdCountry.setEnabled(false);
+            cajaLastU.setEnabled(true);
+        }else if(comboOp.getSelectedIndex() == 0){
+            op = 0;
+            btnSearch.setEnabled(false);
+            cajaIdCity.setEnabled(false);
+            cajaCity.setEnabled(false);
+            cajaIdCountry.setEnabled(false);
+            cajaLastU.setEnabled(false);
+        }else if(comboOp.getSelectedIndex() == 5){
+            op = 5;
+            btnSearch.setEnabled(true);
+            cajaIdCity.setEnabled(true);
+            cajaCity.setEnabled(true);
+            cajaIdCountry.setEnabled(true);
+            cajaLastU.setEnabled(true);
+        }
+        actualizarTabla();
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
+        reestablecer(cajaIdCity, cajaCity, cajaIdCountry);
+        op = 5;
+        actualizarTabla();
+        comboOp.setSelectedIndex(5);
+    }//GEN-LAST:event_btnCleanActionPerformed
+
+    public void actualizarTabla(){
+        String controlador = "com.mysql.cj.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/sakila";
+        String consulta = "SELECT * FROM city";
+        
+        ResultSetTableModel modeloDatos = null;
+        
+        if(op == 5){
+            int idCi = -1;
+            int idCo = -1;
+            if(cajaIdCity.getText() != "" || cajaIdCountry.getText() != ""){
+                idCi = Integer.parseInt(cajaIdCity.getText());
+                idCo = Integer.parseInt(cajaIdCountry.getText());
+            }
+            consulta = "SELECT * FROM city WHERE city_id = " + idCi + "AND city = '" + cajaCity.getText() + 
+                    "' AND country_id = " + idCo + "AND last_update = '" + cajaLastU.getText() + "';";
+        }else if(op == 1){
+            int id = -1;
+            if(cajaIdCity.getText() != ""){
+                id = Integer.parseInt(cajaIdCity.getText());
+            }
+            consulta = "SELECT * FROM city WHERE city_id = " + id + ";";
+        }else if(op == 2){
+            consulta = "SELECT * FROM city WHERE city = '" + cajaCity.getText() + "';";
+        }else if(op == 3){
+            int id = -1;
+            if(cajaIdCountry.getText() != ""){
+                id = Integer.parseInt(cajaIdCountry.getText());
+            }
+            consulta = "SELECT * FROM city WHERE country_id = " + id + ";";
+        }else if(op == 4){
+            consulta = "SELECT * FROM city WHERE last_update = '" + cajaLastU.getText() + "';";
+        }
+        try {
+            modeloDatos = new ResultSetTableModel(controlador, url, consulta);
+        } catch (SQLException ex) {
+            Logger.getLogger(AltasActor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AltasActor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tablaCity.setModel(modeloDatos);
+    }
+    
+    public void reestablecer(Component...componentes){
+        for(Component Component : componentes){
+            if(Component instanceof JTextField){
+                ((JTextField)Component).setText("");
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -218,20 +354,20 @@ public class ConsultasCity extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClean;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JTextField cajaCity;
+    private javax.swing.JTextField cajaIdCity;
+    private javax.swing.JTextField cajaIdCountry;
     private javax.swing.JTextField cajaLastU;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> comboOp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable tablaCity;
     // End of variables declaration//GEN-END:variables
 }

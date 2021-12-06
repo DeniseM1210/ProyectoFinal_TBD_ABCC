@@ -197,7 +197,7 @@ public class ConsultasActor extends javax.swing.JFrame {
 
     public static String fechaActual(){
         Date fecha = new Date();
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY hh:mm:ss"); 
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss"); 
         
         return formatoFecha.format(fecha);
     }
@@ -291,7 +291,7 @@ public class ConsultasActor extends javax.swing.JFrame {
         
         ResultSetTableModel modeloDatos = null;
         
-        if(opcionSel == 6){
+        if(opcionSel == 5){
             int id = -1;
             if(cajaIdActor.getText() != ""){
                 id = Integer.parseInt(cajaIdActor.getText());

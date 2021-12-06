@@ -4,6 +4,7 @@
  */
 package vista;
 
+import controlador.CountryDAO;
 import java.awt.Component;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -186,6 +187,7 @@ public class ConsultasCountry extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        CountryDAO cDAO = new CountryDAO();
         if(comboOpciones.getSelectedIndex() == 1){
             if(cajaIdCountry.getText().isEmpty()){
                 op = 0;
@@ -235,6 +237,9 @@ public class ConsultasCountry extends javax.swing.JFrame {
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
         reestablecer(cajaIdCountry, cajaCountry);
+        op = 4;
+        actualizarTabla();
+        comboOpciones.setSelectedIndex(4);
     }//GEN-LAST:event_btnCleanActionPerformed
 
     public void actualizarTabla(){

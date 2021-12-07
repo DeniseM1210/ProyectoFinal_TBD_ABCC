@@ -68,6 +68,24 @@ public class BajasActor extends javax.swing.JFrame {
 
         jLabel5.setText("Last Update");
 
+        cajaIdActor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cajaIdActorKeyTyped(evt);
+            }
+        });
+
+        cajaFN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cajaFNKeyTyped(evt);
+            }
+        });
+
+        cajaLN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cajaLNKeyTyped(evt);
+            }
+        });
+
         cajaLastU.setEditable(false);
 
         jButton1.setText("Search");
@@ -220,6 +238,29 @@ public class BajasActor extends javax.swing.JFrame {
     private void tablaActorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaActorMouseClicked
         obtenerRegistroTabla();
     }//GEN-LAST:event_tablaActorMouseClicked
+
+    private void cajaIdActorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaIdActorKeyTyped
+        char caracter = evt.getKeyChar();
+        if(((caracter < 48) || (caracter > 57)) && (caracter != '\b')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_cajaIdActorKeyTyped
+
+    private void cajaFNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaFNKeyTyped
+        char carac = evt.getKeyChar();
+        if(Character.isLetter(carac)){
+        }else{
+            evt.consume();
+        }
+    }//GEN-LAST:event_cajaFNKeyTyped
+
+    private void cajaLNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaLNKeyTyped
+        char carac = evt.getKeyChar();
+        if(Character.isLetter(carac) || Character.isSpaceChar(carac)){
+        }else{
+            evt.consume();
+        }
+    }//GEN-LAST:event_cajaLNKeyTyped
 
     public void reestablecer(Component...componentes){
         for(Component Component : componentes){

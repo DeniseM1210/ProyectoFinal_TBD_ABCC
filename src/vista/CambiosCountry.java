@@ -66,6 +66,18 @@ public class CambiosCountry extends javax.swing.JFrame {
 
         jLabel4.setText("Last Update");
 
+        cajaIdCountry.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cajaIdCountryKeyTyped(evt);
+            }
+        });
+
+        cajaCountry.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cajaCountryKeyTyped(evt);
+            }
+        });
+
         cajaLastU.setEditable(false);
 
         btnSearch.setText("Search");
@@ -243,6 +255,21 @@ public class CambiosCountry extends javax.swing.JFrame {
         this.setVisible(false);
         hc.setVisible(true);
     }//GEN-LAST:event_btnHistoryActionPerformed
+
+    private void cajaIdCountryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaIdCountryKeyTyped
+        char caracter = evt.getKeyChar();
+        if(((caracter < 48) || (caracter > 57)) && (caracter != '\b')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_cajaIdCountryKeyTyped
+
+    private void cajaCountryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaCountryKeyTyped
+        char carac = evt.getKeyChar();
+        if(Character.isLetter(carac) || Character.isSpaceChar(carac)){
+        }else{
+            evt.consume();
+        }
+    }//GEN-LAST:event_cajaCountryKeyTyped
 
     public void reestablecer(Component...componentes){
         for(Component Component : componentes){

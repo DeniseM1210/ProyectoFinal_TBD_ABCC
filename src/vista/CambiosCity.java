@@ -69,9 +69,26 @@ public class CambiosCity extends javax.swing.JFrame {
 
         jLabel5.setText("Last Update");
 
+        cajaIdCity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cajaIdCityKeyTyped(evt);
+            }
+        });
+
+        cajaCity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cajaCityKeyTyped(evt);
+            }
+        });
+
         cajaIdCountry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cajaIdCountryActionPerformed(evt);
+            }
+        });
+        cajaIdCountry.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cajaIdCountryKeyTyped(evt);
             }
         });
 
@@ -251,6 +268,28 @@ public class CambiosCity extends javax.swing.JFrame {
     private void tablaCityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCityMouseClicked
         obtenerRegistroTabla();
     }//GEN-LAST:event_tablaCityMouseClicked
+
+    private void cajaIdCityKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaIdCityKeyTyped
+        char caracter = evt.getKeyChar();
+        if(((caracter < 48) || (caracter > 57)) && (caracter != '\b')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_cajaIdCityKeyTyped
+
+    private void cajaCityKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaCityKeyTyped
+        char carac = evt.getKeyChar();
+        if(Character.isLetter(carac) || Character.isSpaceChar(carac)){
+        }else{
+            evt.consume();
+        }
+    }//GEN-LAST:event_cajaCityKeyTyped
+
+    private void cajaIdCountryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaIdCountryKeyTyped
+        char caracter = evt.getKeyChar();
+        if(((caracter < 48) || (caracter > 57)) && (caracter != '\b')){
+            evt.consume();
+        }
+    }//GEN-LAST:event_cajaIdCountryKeyTyped
 
     public void actualizarTabla(){
         String controlador = "com.mysql.cj.jdbc.Driver";

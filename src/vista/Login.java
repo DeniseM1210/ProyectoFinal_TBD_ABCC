@@ -4,10 +4,8 @@
  */
 package vista;
 
-import controlador.UsuarioDAO;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import modelo.Usuario;
 
 /**
  *
@@ -42,6 +40,7 @@ public class Login extends javax.swing.JFrame {
         cajaPass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1425553.png"))); // NOI18N
 

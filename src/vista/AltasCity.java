@@ -56,6 +56,7 @@ public class AltasCity extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaCity = new javax.swing.JTable();
+        btnGraf = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -129,6 +130,13 @@ public class AltasCity extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablaCity);
 
+        btnGraf.setText("See Graph");
+        btnGraf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrafActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,12 +167,14 @@ public class AltasCity extends javax.swing.JFrame {
                 .addComponent(btnRegresar))
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jLabel5)
-                .addGap(10, 10, 10)
-                .addComponent(cajaLastU, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(10, 10, 10)
+                        .addComponent(cajaLastU, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGraf))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,13 +208,15 @@ public class AltasCity extends javax.swing.JFrame {
                         .addGap(1, 1, 1)
                         .addComponent(cajaIdCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnRegresar))
-                .addGap(11, 11, 11)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel5))
-                    .addComponent(cajaLastU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cajaLastU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGraf)))
+                .addGap(4, 4, 4)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -228,10 +240,10 @@ public class AltasCity extends javax.swing.JFrame {
             int idC = Integer.parseInt(idCountry);
             City c = new City(id, cajaCity.getText(), idC, cajaLastU.getText());
             if(cDAO.insertarCity(c)){
-                JOptionPane.showMessageDialog(null, "City added successfully");
+                //JOptionPane.showMessageDialog(null, "City added successfully");
                 actualizarTabla();
             }else{
-                JOptionPane.showMessageDialog(null, "City not added, please try again");
+                //JOptionPane.showMessageDialog(null, "City not added, please try again");
                 actualizarTabla();
             }
         }
@@ -273,6 +285,12 @@ public class AltasCity extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_cajaIdCountryKeyTyped
+
+    private void btnGrafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrafActionPerformed
+        VerGrafica vg = new VerGrafica();
+        this.setVisible(false);
+        vg.setVisible(true);
+    }//GEN-LAST:event_btnGrafActionPerformed
 
     public void actualizarTabla(){
         String controlador = "com.mysql.cj.jdbc.Driver";
@@ -336,6 +354,7 @@ public class AltasCity extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnClean;
+    private javax.swing.JButton btnGraf;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JTextField cajaCity;
     private javax.swing.JTextField cajaIdCity;

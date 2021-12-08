@@ -206,10 +206,10 @@ public class AltasCountry extends javax.swing.JFrame {
             int id = Integer.parseInt(idCountry);
             Country c = new Country(id, cajaCountry.getText(), cajaLastU.getText());
             if(cDAO.insertarCountry(c)){
-                JOptionPane.showMessageDialog(null, "Country added successfully");
+                //JOptionPane.showMessageDialog(null, "Country added successfully");
                 actualizarTabla();
             }else{
-                JOptionPane.showMessageDialog(null, "Country not added, please try again");
+                //JOptionPane.showMessageDialog(null, "Country not added, please try again");
                 actualizarTabla();
             }
         }

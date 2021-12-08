@@ -243,13 +243,13 @@ public class CambiosCity extends javax.swing.JFrame {
         City c = new City(id, cajaCity.getText(), idCo, cajaLastU.getText());
         
         if(cDAO.modificarCity(c)){
-            JOptionPane.showMessageDialog(null, "City modified successfully");
+            //JOptionPane.showMessageDialog(null, "City modified successfully");
             actualizarTabla();
             reestablecer(cajaIdCity, cajaCity, cajaIdCountry);
             cajaCity.setEnabled(false);
             cajaIdCountry.setEnabled(false);
         }else{
-            JOptionPane.showMessageDialog(null, "The city was'nt modified");
+            //JOptionPane.showMessageDialog(null, "The city was'nt modified");
             actualizarTabla();
             reestablecer(cajaIdCity, cajaCity, cajaIdCountry);
             cajaCity.setEnabled(false);

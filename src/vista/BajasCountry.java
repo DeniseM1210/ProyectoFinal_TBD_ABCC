@@ -216,11 +216,11 @@ public class BajasCountry extends javax.swing.JFrame {
         CountryDAO cDAO = new CountryDAO();
         
         if(cDAO.eliminarCountry(Integer.parseInt(cajaIdCountry.getText()))){
-            JOptionPane.showMessageDialog(null, "Country deleted successfully");
+            //JOptionPane.showMessageDialog(null, "Country deleted successfully");
             actualizarTabla();
             reestablecer(cajaIdCountry, cajaCountry);
         }else{
-            JOptionPane.showMessageDialog(null, "The Country was not eliminated");
+            //JOptionPane.showMessageDialog(null, "The Country was not eliminated");
             actualizarTabla();
             reestablecer(cajaIdCountry, cajaCountry);
         }

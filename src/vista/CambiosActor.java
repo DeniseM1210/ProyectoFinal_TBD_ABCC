@@ -226,13 +226,13 @@ public class CambiosActor extends javax.swing.JFrame {
         Actor a = new Actor(id, cajaFN.getText(), cajaLN.getText(), cajaLastU.getText());
         
         if(aDAO.modificarActor(a)){
-            JOptionPane.showMessageDialog(null, "Actor modified successfully");
+            //JOptionPane.showMessageDialog(null, "Actor modified successfully");
             actualizarTabla();
             reestablecer(cajaIdActor, cajaFN, cajaLN);
             cajaFN.setEnabled(false);
             cajaLN.setEnabled(false);
         }else{
-            JOptionPane.showMessageDialog(null, "The actor was'nt modified");
+            //JOptionPane.showMessageDialog(null, "The actor was'nt modified");
             actualizarTabla();
             reestablecer(cajaIdActor, cajaFN, cajaLN);
             cajaFN.setEnabled(false);

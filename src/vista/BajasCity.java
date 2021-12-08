@@ -247,11 +247,11 @@ public class BajasCity extends javax.swing.JFrame {
         CityDAO cDAO = new CityDAO();
         
         if(cDAO.eliminarCity(Integer.parseInt(cajaIdCity.getText()))){
-            JOptionPane.showMessageDialog(null, "City deleted successfully");
+            //JOptionPane.showMessageDialog(null, "City deleted successfully");
             actualizarTabla();
             reestablecer(cajaIdCity, cajaCity, cajaIdCountry);
         }else{
-            JOptionPane.showMessageDialog(null, "The city was'nt eliminated");
+            //JOptionPane.showMessageDialog(null, "The city was'nt eliminated");
             actualizarTabla();
             reestablecer(cajaIdCity, cajaCity, cajaIdCountry);
         }

@@ -6,12 +6,16 @@ package vista;
 
 import controlador.ActorDAO;
 import java.awt.Component;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -23,6 +27,8 @@ public class ConsultasActor extends javax.swing.JFrame {
      * Creates new form ConsultasActor
      */
     byte opcionSel = 0;
+    private TableRowSorter trsFiltro;
+    private DefaultTableModel tablaDatos;
     public ConsultasActor() {
         initComponents();
         
@@ -70,6 +76,18 @@ public class ConsultasActor extends javax.swing.JFrame {
         jLabel4.setText("Last Name");
 
         jLabel5.setText("Last Update");
+
+        cajaIdActor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cajaIdActorKeyTyped(evt);
+            }
+        });
+
+        cajaFN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cajaFNKeyTyped(evt);
+            }
+        });
 
         comboOpciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccionar opcion...", "id Actor", "First Name", "Last Name", "Last Update", "All" }));
         comboOpciones.addActionListener(new java.awt.event.ActionListener() {
@@ -279,10 +297,24 @@ public class ConsultasActor extends javax.swing.JFrame {
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
         reestablecer(cajaIdActor, cajaFN, cajaLN);
-        opcionSel = 5;
+        opcionSel = 0;
         actualizarTabla();
-        comboOpciones.setSelectedIndex(5);
+        comboOpciones.setSelectedIndex(0);
     }//GEN-LAST:event_btnCleanActionPerformed
+
+    private void cajaIdActorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaIdActorKeyTyped
+        cajaIdActor.addKeyListener(new KeyAdapter(){
+            public void keyTyped(final KeyEvent e){
+                actualizarTabla();
+            }
+        });
+        trsFiltro = new TableRowSorter(tablaDatos);
+        tablaActor.setRowSorter(trsFiltro);
+    }//GEN-LAST:event_cajaIdActorKeyTyped
+
+    private void cajaFNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaFNKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cajaFNKeyTyped
 
     public void actualizarTabla(){
         String controlador = "com.mysql.cj.jdbc.Driver";
